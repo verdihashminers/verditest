@@ -3,248 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Verdihash Quantum Portal</title>
-
-<!-- GOOGLE FONT -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-
-<!-- Lottie for AI expressions -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
-
-<!-- THREE.JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r152/three.min.js"></script>
-
+<title>Verdihash - Under Maintenance</title>
 <style>
-:root {
-    --bg:#050508; --fg:#e8e8ff; --accent:#00eaff; --accent2:#ff00d4;
-}
-.light {
-    --bg:#edf1ff; --fg:#0d0d20; --accent:#005cff; --accent2:#ff0095;
-}
 body {
-    margin:0; font-family:"Orbitron",sans-serif;
-    background:var(--bg); color:var(--fg); overflow:hidden; transition:0.3s;
+    margin: 0;
+    padding: 0;
+    font-family: 'Orbitron', sans-serif;
+    background: #0d0d20;
+    color: #00eaff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
 }
-#themeToggle,#crtToggle {
-    position:fixed; top:15px; padding:10px 20px; z-index:50;
-    background:var(--accent2); border:none; color:#fff; cursor:pointer;
-    font-weight:bold; border-radius:6px; margin-left:5px;
+h1 {
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
 }
-#crtToggle { right:150px; } #themeToggle { right:15px; }
-
-/* PORTAL INTRO */
-#portal-cover { position:fixed; width:100vw; height:100vh;
-    background:radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(0,0,0,0.9) 100%);
-    z-index:60; display:flex; justify-content:center; align-items:center;
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    color: #ff00d4;
 }
-#portal-ring { width:200px; height:200px; border:4px solid var(--accent);
-    border-radius:50%; animation:spinPortal 3s ease-out forwards;
+.icon {
+    font-size: 5rem;
+    margin-bottom: 1rem;
+    animation: swing 1.5s infinite ease-in-out;
 }
-@keyframes spinPortal {0%{transform:scale(0) rotate(0deg); opacity:1;}
-100%{transform:scale(1.5) rotate(1080deg); opacity:0;}}
-
-/* PORTAL UI */
-#portal-container { position:absolute; top:50%; left:50%;
-    transform:translate(-50%,-50%); text-align:center; z-index:20;
+@keyframes swing {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(15deg); }
+    50% { transform: rotate(0deg); }
+    75% { transform: rotate(-15deg); }
+    100% { transform: rotate(0deg); }
 }
-#title{font-size:3.2rem;text-shadow:0 0 20px var(--accent);}
-#subtitle{font-size:1.4rem;margin-bottom:1rem;text-shadow:0 0 10px var(--accent2);}
-#ai-head{width:200px;height:200px;border-radius:50%;margin:0 auto 1rem;border:3px solid var(--accent);box-shadow:0 0 25px var(--accent);overflow:hidden;position:relative;}
-#aiHead3D{width:100%;height:100%;position:absolute;top:0;left:0;}
-#aiLottie{width:100%;height:100%;position:absolute;top:0;left:0;pointer-events:none;}
-#chat-bubble{margin-top:1rem;padding:0.8rem 1rem;border:2px solid var(--accent2);display:inline-block;max-width:340px;background:rgba(0,0,0,0.45);backdrop-filter:blur(4px);border-radius:12px;font-size:1rem;color:var(--accent2);box-shadow:0 0 20px var(--accent2);}
-#stats{margin-top:1.5rem;font-size:1.2rem;color:var(--accent);}
-
-/* CANVASES */
-#shaderBG,#gpuRig,#dashCanvas{position:fixed; z-index:1;}
-#shaderBG{top:0; left:0; width:100vw; height:100vh;}
-#gpuRig{bottom:0; right:0; width:42vw; height:42vh; border:2px solid var(--accent); box-shadow:0 0 15px var(--accent);}
-#dashCanvas{bottom:0; left:0; width:40vw; height:25vh; border:2px solid var(--accent2); box-shadow:0 0 12px var(--accent2);}
-
-/* CRT Filter */
-.crtFilter{image-rendering:pixelated; filter:contrast(1.2) brightness(1.2) saturate(1.3) grayscale(0.05); background-blend-mode:overlay; animation:scanlines 0.15s steps(2) infinite;}
-@keyframes scanlines{0%{background-position:0 0;}100%{background-position:0 100%;}}
+.stats {
+    font-size: 1.2rem;
+    margin-top: 1rem;
+}
+.stats span {
+    display: inline-block;
+    margin: 0 1rem;
+    color: #00ff94;
+}
+footer {
+    position: absolute;
+    bottom: 20px;
+    font-size: 0.9rem;
+    color: #888;
+}
 </style>
 </head>
 <body>
 
-<button id="themeToggle">Toggle Theme</button>
-<button id="crtToggle">CRT Filter</button>
+<div class="icon">⛏️</div>
+<h1>Verdihash</h1>
+<h2>Site Under Maintenance</h2>
 
-<canvas id="shaderBG"></canvas>
-<canvas id="gpuRig"></canvas>
-<canvas id="dashCanvas"></canvas>
-
-<div id="portal-cover"><div id="portal-ring"></div></div>
-
-<div id="portal-container">
-    <div id="ai-head">
-        <div id="aiLottie"></div>
-        <canvas id="aiHead3D"></canvas>
-    </div>
-    <h1 id="title">Verdihash</h1>
-    <div id="subtitle">Quantum Hashpower Initializing…</div>
-    <div id="chat-bubble">Hello human. Establishing mining neural link…</div>
-    <div id="stats">
-        <div id="btc">BTC: loading…</div>
-        <div id="hashrate">Hashrate: calculating…</div>
-        <div id="pool">Pool: connecting…</div>
-    </div>
+<div class="stats">
+    <span>Hashrate: 0 TH/s</span>
+    <span>Mining Status: Offline</span>
 </div>
 
-<audio id="bgMusic" src="https://cdn.pixabay.com/audio/2022/03/15/audio_764fc4b7b0.mp3" autoplay loop></audio>
+<footer>We'll be back soon!</footer>
 
-<script>
-/* -------------------------
-   THEME + CRT TOGGLE
-------------------------- */
-document.getElementById("themeToggle").onclick=()=>{document.body.classList.toggle("light");};
-document.getElementById("crtToggle").onclick=()=>{document.getElementById("shaderBG").classList.toggle("crtFilter");};
-
-/* -------------------------
-   BTC FEED
-------------------------- */
-async function loadBTC(){
-    try{
-        const r=await fetch("https://api.coindesk.com/v1/bpi/currentprice.json");
-        const j=await r.json();
-        document.getElementById("btc").innerText="BTC: $"+Math.round(j.bpi.USD.rate_float).toLocaleString();
-    }catch{document.getElementById("btc").innerText="BTC: offline";}
-}
-setInterval(loadBTC,15000); loadBTC();
-
-/* -------------------------
-   HASHRATE SIMULATION
-------------------------- */
-function updateHash(){const base=120+Math.random()*40;document.getElementById("hashrate").innerText="Hashrate: "+base.toFixed(2)+" TH/s";}
-setInterval(updateHash,800); updateHash();
-
-/* -------------------------
-   AI CHAT + SPEECH
-------------------------- */
-const aiLines=["Calibrating quantum shards…","Aligning GPU photonic rails…","Decrypting neural mining mesh…","Synchronizing crystal fields…","Monitoring BTC network entropy…"];
-let idx=0; const synth=window.speechSynthesis;
-function speak(text){if(synth.speaking)synth.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang="en-US"; u.volume=0.5; u.rate=1; synth.speak(u);}
-setInterval(()=>{idx=(idx+1)%aiLines.length; const msg=aiLines[idx]; document.getElementById("chat-bubble").innerText=msg; speak(msg);},4000);
-
-/* -------------------------
-   PORTAL INTRO
-------------------------- */
-window.addEventListener("load",()=>{setTimeout(()=>{document.getElementById("portal-cover").style.display="none";},3000);});
-
-/* -------------------------
-   SHADER BACKGROUND
-------------------------- */
-const shaderCanvas=document.getElementById("shaderBG");
-const gl=shaderCanvas.getContext("webgl");
-shaderCanvas.width=innerWidth; shaderCanvas.height=innerHeight;
-const vertex=`attribute vec2 pos;void main(){gl_Position=vec4(pos,0.0,1.0);}`;
-const fragment=`precision mediump float;uniform float t;uniform vec2 r;void main(){vec2 uv=(gl_FragCoord.xy-r*0.5)/r.y;float d=length(uv);float a=atan(uv.y,uv.x);float glow=0.04/abs(sin(a*5.0+t*0.2));float fractal=sin(10.0*d-t*0.8)*0.5+0.5;vec3 col=vec3(fractal*0.2,glow,fractal);gl_FragColor=vec4(col,1.0);}`;
-function compileShader(type,source){const s=gl.createShader(type); gl.shaderSource(s,source); gl.compileShader(s); return s;}
-const vs=compileShader(gl.VERTEX_SHADER,vertex);
-const fs=compileShader(gl.FRAGMENT_SHADER,fragment);
-const prog=gl.createProgram(); gl.attachShader(prog,vs); gl.attachShader(prog,fs); gl.linkProgram(prog); gl.useProgram(prog);
-const buffer=gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER,buffer); gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,1,-1,-1,1,1,1]),gl.STATIC_DRAW);
-const loc=gl.getAttribLocation(prog,"pos"); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
-const tLoc=gl.getUniformLocation(prog,"t"); const rLoc=gl.getUniformLocation(prog,"r");
-function animateShader(time){gl.uniform1f(tLoc,time*0.001); gl.uniform2f(rLoc,shaderCanvas.width,shaderCanvas.height); gl.drawArrays(gl.TRIANGLE_STRIP,0,4); requestAnimationFrame(animateShader);}
-animateShader();
-
-/* -------------------------
-   GPU RIG ROOM
-------------------------- */
-const gpuCanvas=document.getElementById("gpuRig");
-const renderer=new THREE.WebGLRenderer({canvas:gpuCanvas,antialias:true});
-const scene=new THREE.Scene();
-const camera=new THREE.PerspectiveCamera(60,gpuCanvas.clientWidth/gpuCanvas.clientHeight,0.1,100);
-camera.position.set(0,1.2,6);
-renderer.setSize(gpuCanvas.clientWidth,gpuCanvas.clientHeight);
-const gpuLight=new THREE.PointLight(0x00eaff,3,20);gpuLight.position.set(0,2,3);scene.add(gpuLight);
-const gpuGeom=new THREE.BoxGeometry(1,0.4,0.2);
-const fanGeom=new THREE.CircleGeometry(0.15,32);
-for(let i=-2;i<=2;i++){
-    const gpu=new THREE.Mesh(gpuGeom,new THREE.MeshStandardMaterial({color:0x0099aa,emissive:0x003355,metalness:0.7,roughness:0.3}));
-    gpu.position.x=i*1.2; scene.add(gpu);
-    const fan=new THREE.Mesh(fanGeom,new THREE.MeshBasicMaterial({color:0x00eaff}));
-    fan.position.set(i*1.2,0,0.12); fan.rotation.x=Math.PI/2; scene.add(fan); gpu.fan=fan;
-}
-function animateRig(){scene.traverse(obj=>{if(obj.fan)obj.fan.rotation.z+=0.3}); renderer.render(scene,camera); requestAnimationFrame(animateRig);}
-animateRig();
-
-/* -------------------------
-   AI HEAD 3D + Lottie
-------------------------- */
-const headCanvas=document.getElementById("aiHead3D");
-const headRenderer=new THREE.WebGLRenderer({canvas:headCanvas,alpha:true});
-headRenderer.setSize(200,200);
-const headScene=new THREE.Scene();
-const headCam=new THREE.PerspectiveCamera(60,1,0.1,100);
-headCam.position.z=3;
-const geo=new THREE.SphereGeometry(1,64,64);
-const mat=new THREE.MeshStandardMaterial({color:0x00ddff,emissive:0x004466,metalness:0.5,roughness:0.2});
-const aiHead=new THREE.Mesh(geo,mat);headScene.add(aiHead);
-const hlight=new THREE.PointLight(0x00eaff,2,10);hlight.position.set(2,2,3);headScene.add(hlight);
-const lottieAnim=lottie.loadAnimation({container:document.getElementById("aiLottie"),renderer:'svg',loop:true,autoplay:true,path:'https://assets10.lottiefiles.com/packages/lf20_mz0mwdq0.json'});
-function animateHead(time){aiHead.rotation.y+=0.005;aiHead.rotation.x=Math.sin(time*0.001)*0.2;headRenderer.render(headScene,headCam); requestAnimationFrame(animateHead);}
-animateHead();
-
-/* -------------------------
-   MINING POOL FEED
-------------------------- */
-async function loadPool(){
-    try{
-        const r=await fetch('https://api2.nicehash.com/main/api/v2/public/mining/rigs2');
-        const j=await r.json();
-        const active=j.totalStats?j.totalStats.activeWorkers:"offline";
-        document.getElementById("pool").innerText="Pool Workers: "+active;
-    }catch{
-        const workers=Math.floor(50+Math.random()*150);
-        document.getElementById("pool").innerText="Pool Workers: "+workers;
-    }
-}
-setInterval(loadPool,10000); loadPool();
-
-/* -------------------------
-   MINING DASHBOARD
-------------------------- */
-const dashCanvas=document.getElementById("dashCanvas");
-const dashRenderer=new THREE.WebGLRenderer({canvas:dashCanvas,alpha:true});
-dashRenderer.setSize(dashCanvas.clientWidth,dashCanvas.clientHeight);
-const dashScene=new THREE.Scene();
-const dashCam=new THREE.PerspectiveCamera(60,dashCanvas.clientWidth/dashCanvas.clientHeight,0.1,100);
-dashCam.position.z=10;
-const dashLight=new THREE.PointLight(0x00eaff,2,20); dashLight.position.set(5,5,10); dashScene.add(dashLight);
-
-const nodes=[]; const nodeGeom=new THREE.SphereGeometry(0.2,16,16);
-for(let i=0;i<15;i++){
-    const node=new THREE.Mesh(nodeGeom,new THREE.MeshStandardMaterial({color:0xff00ff,emissive:0x440055}));
-    node.position.set(Math.random()*8-4,Math.random()*3-1.5,Math.random()*4-2);
-    dashScene.add(node); nodes.push(node);
-}
-
-const pipelines=[]; const lineMat=new THREE.LineBasicMaterial({color:0x00eaff});
-for(let i=0;i<nodes.length-1;i++){
-    const points=[nodes[i].position,nodes[i+1].position];
-    const lineGeom=new THREE.BufferGeometry().setFromPoints(points);
-    const line=new THREE.Line(lineGeom,lineMat.clone());
-    dashScene.add(line); pipelines.push(line);
-}
-
-// Animate dashboard nodes and neon flows
-function animateDash(time){
-    nodes.forEach((n,i)=>{
-        n.position.y+=Math.sin(time*0.001+i)*0.002;
-        n.scale.setScalar(1+0.3*Math.abs(Math.sin(time*0.002+i)));
-    });
-    // animate pipeline color brightness
-    pipelines.forEach((l,i)=>{
-        l.material.color.offsetHSL(0,0,Math.sin(time*0.002+i)*0.01);
-    });
-    dashRenderer.render(dashScene,dashCam);
-    requestAnimationFrame(animateDash);
-}
-animateDash();
-
-</script>
 </body>
 </html>
