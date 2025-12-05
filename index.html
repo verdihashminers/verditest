@@ -1,391 +1,234 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>VerdiHash — Cloud Bitcoin Mining</title>
-  <meta name="description" content="VerdiHash — Buy Bitcoin hashpower. No hardware, no hassle. Demo MVP."/>
-  <meta name="theme-color" content="#0f172a" />
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
-  <!-- Tailwind via CDN for quick MVP -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Alpine.js for tiny interactivity -->
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <style>
-    /* Simple visuals for hero background */
-    .hero-bg {
-      background: radial-gradient(ellipse at top left, rgba(0,255,127,0.06), transparent 20%),
-                  linear-gradient(180deg, rgba(6,8,15,0.9), rgba(2,6,23,0.95));
-      background-blend-mode: screen, normal;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>VERDIHASH — Under Development</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;600;800&display=swap" rel="stylesheet">
+
+<style>
+    body {
+        margin: 0;
+        font-family: 'Montserrat', sans-serif;
+        background: #0d0f17;
+        overflow: hidden;
+        color: #fff;
     }
-    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(6px); }
-  </style>
+
+    /* Particle canvas */
+    #particlesCanvas {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 0;
+    }
+
+    .content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 0 20px;
+    }
+
+    h1 {
+        font-size: 4rem;
+        margin: 0;
+        font-weight: 800;
+        letter-spacing: 2px;
+        background: linear-gradient(90deg, #0ff, #0f0, #0ff);
+        background-size: 400%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        animation: glowText 6s ease infinite;
+    }
+
+    @keyframes glowText {
+        0% {background-position: 0%;}
+        50% {background-position: 100%;}
+        100% {background-position: 0%;}
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        margin-top: 10px;
+        opacity: 0.8;
+    }
+
+    .status-box {
+        display: inline-block;
+        margin-top: 30px;
+        padding: 12px 25px;
+        border: 2px solid #0ff;
+        border-radius: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        backdrop-filter: blur(4px);
+        cursor: pointer;
+        transition: .3s;
+        animation: pulse 2s infinite;
+    }
+
+    .status-box:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 20px #0ff;
+    }
+
+    @keyframes pulse {
+        0% {box-shadow: 0 0 5px #0ff;}
+        50% {box-shadow: 0 0 20px #0ff;}
+        100% {box-shadow: 0 0 5px #0ff;}
+    }
+
+    /* Mining Icon */
+    #miner {
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        opacity: 0.7;
+        cursor: pointer;
+        transition: .2s;
+        z-index: 3;
+    }
+
+    #miner:hover {
+        opacity: 1;
+        transform: translateX(-50%) scale(1.2);
+    }
+
+    .footer {
+        position: absolute;
+        bottom: 15px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: .8rem;
+        opacity: 0.6;
+        z-index: 3;
+    }
+</style>
 </head>
-<body class="min-h-screen bg-slate-900 text-slate-100 antialiased">
-  <header class="hero-bg text-white">
-    <div class="max-w-6xl mx-auto px-6 py-8 flex items-center justify-between">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-md bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center font-bold text-slate-900">V</div>
-        <div>
-          <a href="#" class="text-xl font-semibold">VerdiHash</a>
-          <div class="text-xs text-slate-300">Cloud Bitcoin Mining — MVP</div>
-        </div>
-      </div>
-      <nav class="hidden md:flex gap-6 items-center text-slate-200">
-        <a href="#plans" class="hover:text-white">Plans</a>
-        <a href="#stats" class="hover:text-white">Stats</a>
-        <a href="#faq" class="hover:text-white">FAQ</a>
-        <a href="#contact" class="px-4 py-2 bg-emerald-500 text-slate-900 rounded-md font-medium shadow">Get Started</a>
-      </nav>
-      <div class="md:hidden">
-        <!-- mobile menu toggle (no heavy logic) -->
-      </div>
+
+<body>
+
+<canvas id="particlesCanvas"></canvas>
+
+<div class="content">
+    <h1 id="title">VERDIHASH</h1>
+    <div class="subtitle">A Next-Gen Bitcoin & Crypto Mining Farm • Cloud Mining Contracts Coming Soon</div>
+
+    <div class="status-box" id="statusBtn">
+        Site is under development
     </div>
-  </header>
+</div>
 
-  <main class="max-w-6xl mx-auto px-6 py-12">
-    <!-- HERO -->
-    <section class="grid lg:grid-cols-2 gap-8 items-center">
-      <div class="space-y-6">
-        <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">Mine Bitcoin — without the hardware.</h1>
-        <p class="text-slate-300">Buy measurable hashpower (TH/s) from our secure data-centers. Start mining instantly — no setup, no maintenance. This is an MVP demo site for VerdiHash showing plans, live stats, and a simulated checkout.</p>
-        <div class="flex gap-3">
-          <a href="#plans" class="px-6 py-3 bg-emerald-500 text-slate-900 rounded-md font-semibold shadow">Buy Hashpower</a>
-          <a href="#stats" class="px-6 py-3 border border-slate-700 rounded-md text-slate-200">View Stats</a>
-        </div>
-        <div class="mt-4 p-4 glass rounded-md text-sm text-slate-300">
-          <strong>Note:</strong> This is a demo MVP. No real payments are taken — checkout pages are simulated.
-        </div>
-      </div>
-      <div class="bg-gradient-to-br from-slate-800 to-slate-900 p-6 rounded-2xl glass shadow-lg">
-        <div class="flex justify-between items-start">
-          <div>
-            <div class="text-xs text-slate-400">Network Hashrate (demo)</div>
-            <div id="networkHash" class="text-2xl font-mono mt-1">-- PH/s</div>
-          </div>
-          <div class="text-right">
-            <div class="text-xs text-slate-400">BTC Price (demo)</div>
-            <div id="btcPrice" class="text-2xl font-mono mt-1">$--,---</div>
-          </div>
-        </div>
+<div id="miner">⛏️</div>
+<div class="footer">© VERDIHASH — Mining the Future</div>
 
-        <hr class="my-4 border-slate-700" />
+<!-- GSAP for animations -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
-        <div class="grid grid-cols-2 gap-4">
-          <div class="p-3 bg-slate-800 rounded">
-            <div class="text-xs text-slate-400">Active Contracts</div>
-            <div id="activeContracts" class="font-semibold text-lg">0</div>
-          </div>
-          <div class="p-3 bg-slate-800 rounded">
-            <div class="text-xs text-slate-400">Total Hashpower (demo)</div>
-            <div id="totalHashpower" class="font-semibold text-lg">0 TH/s</div>
-          </div>
-        </div>
+<script>
+/* ========= TITLE FLOAT ANIMATION ========= */
+gsap.from("#title", {
+    y: -40,
+    opacity: 0,
+    duration: 1.5,
+    ease: "power3.out"
+});
 
-        <div class="mt-4">
-          <label for="simHash" class="text-sm text-slate-300">Simulate buying hashpower (TH/s)</label>
-          <input id="simHash" type="range" min="1" max="1000" value="25" class="w-full mt-2" x-data x-on:input="document.getElementById('simHashValue').textContent = $event.target.value" />
-          <div class="flex justify-between text-xs text-slate-400 mt-2"><span>1 TH/s</span><span id="simHashValue">25</span><span>1000 TH/s</span></div>
-        </div>
-      </div>
-    </section>
+gsap.from(".subtitle", {
+    y: 20,
+    opacity: 0,
+    duration: 1.5,
+    delay: 0.3,
+    ease: "power3.out"
+});
 
-    <!-- PLANS -->
-    <section id="plans" class="mt-16">
-      <div class="flex items-center justify-between">
-        <h2 class="text-2xl font-bold">Hashpower Plans</h2>
-        <div class="text-sm text-slate-400">Pay monthly. Prices shown for demo purposes.</div>
-      </div>
+gsap.from(".status-box", {
+    scale: 0.6,
+    opacity: 0,
+    duration: 1,
+    delay: 0.6,
+    ease: "back.out(1.7)"
+});
 
-      <div class="mt-6 grid gap-6 md:grid-cols-3">
-        <!-- Plan cards -->
-        <div class="p-6 rounded-2xl bg-slate-800 border border-slate-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="font-semibold text-lg">Starter</div>
-              <div class="text-sm text-slate-400">Entry level</div>
-            </div>
-            <div class="text-2xl font-mono">10 TH/s</div>
-          </div>
-          <div class="mt-4 text-3xl font-bold">$99 <span class="text-sm font-normal">/ month</span></div>
-          <ul class="mt-4 text-sm text-slate-300 space-y-2">
-            <li>24/7 hosted</li>
-            <li>Quick activation</li>
-            <li>Basic support</li>
-          </ul>
-          <div class="mt-6">
-            <button class="w-full py-3 bg-emerald-500 rounded-md font-semibold text-slate-900" onclick="openPurchaseModal('Starter',10,99)">Buy 10 TH/s</button>
-          </div>
-        </div>
+/* ========= PARTICLE BACKGROUND ========= */
+const canvas = document.getElementById("particlesCanvas");
+const ctx = canvas.getContext("2d");
 
-        <div class="p-6 rounded-2xl bg-slate-800 border border-slate-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="font-semibold text-lg">Pro Miner</div>
-              <div class="text-sm text-slate-400">Most popular</div>
-            </div>
-            <div class="text-2xl font-mono">50 TH/s</div>
-          </div>
-          <div class="mt-4 text-3xl font-bold">$399 <span class="text-sm font-normal">/ month</span></div>
-          <ul class="mt-4 text-sm text-slate-300 space-y-2">
-            <li>Priority support</li>
-            <li>Better ROI</li>
-            <li>SLA-backed uptime</li>
-          </ul>
-          <div class="mt-6">
-            <button class="w-full py-3 bg-slate-900 border border-emerald-500 rounded-md font-semibold text-emerald-500" onclick="openPurchaseModal('Pro Miner',50,399)">Buy 50 TH/s</button>
-          </div>
-        </div>
+let particles = [];
 
-        <div class="p-6 rounded-2xl bg-slate-800 border border-slate-700">
-          <div class="flex items-center justify-between">
-            <div>
-              <div class="font-semibold text-lg">Enterprise</div>
-              <div class="text-sm text-slate-400">For large operations</div>
-            </div>
-            <div class="text-2xl font-mono">200 TH/s</div>
-          </div>
-          <div class="mt-4 text-3xl font-bold">$1,499 <span class="text-sm font-normal">/ month</span></div>
-          <ul class="mt-4 text-sm text-slate-300 space-y-2">
-            <li>Dedicated racks</li>
-            <li>Custom SLAs</li>
-            <li>Onboarding support</li>
-          </ul>
-          <div class="mt-6">
-            <button class="w-full py-3 bg-emerald-600 rounded-md font-semibold text-slate-900" onclick="openPurchaseModal('Enterprise',200,1499)">Buy 200 TH/s</button>
-          </div>
-        </div>
-      </div>
+function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener("resize", resize);
 
-      <!-- Calculator -->
-      <div class="mt-12 p-6 rounded-2xl bg-slate-800 border border-slate-700">
-        <h3 class="text-lg font-semibold">Earnings Estimator (demo)</h3>
-        <p class="text-sm text-slate-400 mt-1">This estimator is for demonstration only. Real mining earnings vary with difficulty, fees, and BTC price.</p>
-
-        <div class="mt-4 grid md:grid-cols-3 gap-4">
-          <div>
-            <label class="text-sm text-slate-300">Hashpower (TH/s)</label>
-            <input id="calcHash" type="number" min="1" value="10" class="mt-2 w-full p-2 rounded bg-slate-900 text-slate-100" />
-          </div>
-          <div>
-            <label class="text-sm text-slate-300">BTC Price (USD)</label>
-            <input id="calcPrice" type="number" min="1" value="60000" class="mt-2 w-full p-2 rounded bg-slate-900 text-slate-100" />
-          </div>
-          <div>
-            <label class="text-sm text-slate-300">Network Hashrate (PH/s)</label>
-            <input id="calcNetwork" type="number" min="1" value="350" class="mt-2 w-full p-2 rounded bg-slate-900 text-slate-100" />
-          </div>
-        </div>
-
-        <div class="mt-4 flex gap-3">
-          <button class="px-4 py-2 bg-emerald-500 text-slate-900 rounded font-semibold" onclick="estimateEarnings()">Estimate</button>
-          <button class="px-4 py-2 border border-slate-700 rounded text-slate-300" onclick="resetEstimator()">Reset</button>
-        </div>
-
-        <div id="estResult" class="mt-4 p-4 bg-slate-900 rounded text-slate-200">
-          Enter values and click <strong>Estimate</strong> to see a demo result.
-        </div>
-      </div>
-    </section>
-
-    <!-- STATS -->
-    <section id="stats" class="mt-16">
-      <h2 class="text-2xl font-bold">Live Demo Stats</h2>
-      <p class="text-sm text-slate-400 mt-1">These values are simulated to show what a live dashboard might look like.</p>
-
-      <div class="mt-6 grid md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-2xl bg-slate-800 border border-slate-700">
-          <div class="text-sm text-slate-400">Estimated BTC mined / day</div>
-          <div id="btcPerDay" class="mt-2 text-2xl font-mono">0.000000</div>
-        </div>
-        <div class="p-6 rounded-2xl bg-slate-800 border border-slate-700">
-          <div class="text-sm text-slate-400">Total Hashpower Sold (demo)</div>
-          <div id="soldHash" class="mt-2 text-2xl font-mono">0 TH/s</div>
-        </div>
-        <div class="p-6 rounded-2xl bg-slate-800 border border-slate-700">
-          <div class="text-sm text-slate-400">Uptime</div>
-          <div id="uptime" class="mt-2 text-2xl font-mono">99.99%</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="mt-16">
-      <h2 class="text-2xl font-bold">FAQ</h2>
-      <div class="mt-4 space-y-4 text-slate-300">
-        <div>
-          <div class="font-semibold">Is this a real mining service?</div>
-          <div class="text-sm text-slate-400">This MVP is a demo. The site shows how VerdiHash could sell hashpower. Integrate a payment processor and a real backend to make it production-ready.</div>
-        </div>
-        <div>
-          <div class="font-semibold">How is hashpower measured?</div>
-          <div class="text-sm text-slate-400">Hashpower is measured in TH/s (terahashes per second). The more TH/s you own, the larger your share of the network mining rewards (after fees).</div>
-        </div>
-        <div>
-          <div class="font-semibold">How do payouts work?</div>
-          <div class="text-sm text-slate-400">Payouts should be handled by a backend system which tracks produced shares and schedules Bitcoin transfers. This demo does not implement payouts.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CONTACT -->
-    <section id="contact" class="mt-16 mb-24">
-      <h2 class="text-2xl font-bold">Contact</h2>
-      <p class="text-sm text-slate-400 mt-1">Questions about the MVP or enterprise plans? Send us a message.</p>
-
-      <form class="mt-6 grid md:grid-cols-2 gap-4" onsubmit="event.preventDefault(); alert('This is a demo — form submission is disabled.');">
-        <input required placeholder="Your name" class="p-3 rounded bg-slate-900" />
-        <input required type="email" placeholder="Email" class="p-3 rounded bg-slate-900" />
-        <input placeholder="Company (optional)" class="p-3 rounded bg-slate-900 md:col-span-2" />
-        <textarea required placeholder="Message" class="p-3 rounded bg-slate-900 md:col-span-2 h-28"></textarea>
-        <button type="submit" class="md:col-span-2 py-3 bg-emerald-500 text-slate-900 rounded font-semibold">Send Message</button>
-      </form>
-    </section>
-
-  </main>
-
-  <footer class="border-t border-slate-800 py-6">
-    <div class="max-w-6xl mx-auto px-6 flex items-center justify-between text-sm text-slate-400">
-      <div>© VerdiHash — Demo MVP</div>
-      <div class="space-x-4">
-        <a href="#" class="hover:text-white">Terms</a>
-        <a href="#" class="hover:text-white">Privacy</a>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Purchase Modal (simulated checkout) -->
-  <div id="purchaseModal" class="fixed inset-0 hidden items-center justify-center z-50">
-    <div class="absolute inset-0 bg-black/60" onclick="closePurchaseModal()"></div>
-    <div class="relative w-full max-w-2xl p-6 bg-slate-900 rounded-2xl border border-slate-700">
-      <button class="absolute top-4 right-4 text-slate-400" onclick="closePurchaseModal()">✕</button>
-      <h3 id="modalTitle" class="text-xl font-bold">Purchase</h3>
-      <div id="modalBody" class="mt-4 text-slate-300">
-        <p>Simulated checkout for the selected plan.</p>
-        <div class="mt-4 grid grid-cols-2 gap-4">
-          <div>
-            <label class="text-sm text-slate-400">Plan</label>
-            <input id="modalPlan" class="mt-2 p-2 rounded bg-slate-800" readonly />
-          </div>
-          <div>
-            <label class="text-sm text-slate-400">Hashpower (TH/s)</label>
-            <input id="modalHash" class="mt-2 p-2 rounded bg-slate-800" readonly />
-          </div>
-        </div>
-
-        <div class="mt-4">
-          <label class="text-sm text-slate-400">Payment Method (demo)</label>
-          <select id="modalPayment" class="mt-2 w-full p-2 rounded bg-slate-800">
-            <option>Credit Card (demo)</option>
-            <option>Crypto (demo)</option>
-          </select>
-        </div>
-
-        <div class="mt-6 flex gap-3">
-          <button class="px-4 py-2 bg-emerald-500 text-slate-900 rounded font-semibold" onclick="completePurchase()">Confirm (demo)</button>
-          <button class="px-4 py-2 border border-slate-700 rounded text-slate-300" onclick="closePurchaseModal()">Cancel</button>
-        </div>
-
-        <div id="purchaseMsg" class="mt-4 text-sm text-slate-400"></div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // -- Demo state
-    let demo = {
-      networkPH: 350, // PH/s
-      btcPrice: 60000,
-      totalHashTH: 0,
-      activeContracts: 0
-    };
-
-    // Update demo UI
-    function renderDemo() {
-      document.getElementById('networkHash').textContent = demo.networkPH + ' PH/s';
-      document.getElementById('btcPrice').textContent = '$' + demo.btcPrice.toLocaleString();
-      document.getElementById('totalHashpower').textContent = demo.totalHashTH + ' TH/s';
-      document.getElementById('activeContracts').textContent = demo.activeContracts;
-      document.getElementById('soldHash').textContent = demo.totalHashTH + ' TH/s';
-
-      // estimate btc per day for the entire sold hash
-      // Rough formula: (our_hash / network_hash) * blocks_per_day * block_reward
-      // network_hash in PH -> convert TH to PH by /1000
-      let ourPH = demo.totalHashTH / 1000;
-      let blocksPerDay = 144;
-      let blockReward = 6.25; // BTC
-      let btcPerDay = (ourPH / demo.networkPH) * blocksPerDay * blockReward;
-      if (!isFinite(btcPerDay)) btcPerDay = 0;
-      document.getElementById('btcPerDay').textContent = btcPerDay.toFixed(8);
-      // demo small fluctuation for uptime
-      document.getElementById('uptime').textContent = (99.9 + Math.random() * 0.09).toFixed(4) + '%';
+class Particle {
+    constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 3 + 1;
+        this.speedX = (Math.random() - 0.5) * 0.4;
+        this.speedY = (Math.random() - 0.5) * 0.4;
     }
+    update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
 
-    // Simulate live metric changes
-    setInterval(() => {
-      // small random changes
-      demo.networkPH += (Math.random() - 0.5) * 2; // +/-1
-      demo.btcPrice += (Math.random() - 0.5) * 200; // +/-100
-      demo.networkPH = Math.max(100, Math.round(demo.networkPH * 10) / 10);
-      demo.btcPrice = Math.max(1000, Math.round(demo.btcPrice));
-      renderDemo();
-    }, 2500);
+        if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+        if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+    }
+    draw() {
+        ctx.fillStyle = "#0ff";
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = "#0ff";
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+    }
+}
 
-    // Initial render
-    renderDemo();
+for (let i = 0; i < 80; i++) {
+    particles.push(new Particle());
+}
 
-    // PURCHASE modal logic
-    function openPurchaseModal(planName, th, price) {
-      document.getElementById('purchaseModal').classList.remove('hidden');
-      document.getElementById('modalPlan').value = planName + ' — $' + price + '/month';
-      document.getElementById('modalHash').value = th + ' TH/s';
-      document.getElementById('purchaseMsg').textContent = '';
-    }
-    function closePurchaseModal() {
-      document.getElementById('purchaseModal').classList.add('hidden');
-    }
-    function completePurchase() {
-      // simulate creating a contract and adding hashpower
-      let planText = document.getElementById('modalPlan').value;
-      let thText = document.getElementById('modalHash').value;
-      let th = parseFloat(thText);
-      demo.totalHashTH += th;
-      demo.activeContracts += 1;
-      document.getElementById('purchaseMsg').textContent = 'Purchase complete (demo). Your contract is active.';
-      renderDemo();
-      setTimeout(() => closePurchaseModal(), 1600);
-    }
+function animateParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Estimator
-    function estimateEarnings() {
-      let h = Number(document.getElementById('calcHash').value);
-      let price = Number(document.getElementById('calcPrice').value);
-      let net = Number(document.getElementById('calcNetwork').value);
-      if (!h || !price || !net) {
-        document.getElementById('estResult').textContent = 'Please provide valid numbers.';
-        return;
-      }
-      // our_h (PH) = h / 1000; network PH = net
-      let ourPH = h / 1000;
-      let blocksPerDay = 144;
-      let blockReward = 6.25;
-      let btcPerDay = (ourPH / net) * blocksPerDay * blockReward;
-      if (!isFinite(btcPerDay)) btcPerDay = 0;
-      let usdPerDay = btcPerDay * price;
-      document.getElementById('estResult').innerHTML = `Estimated production: <strong>${btcPerDay.toFixed(8)} BTC/day</strong> (~$${usdPerDay.toFixed(2)}/day at $${price.toLocaleString()}/BTC). <br class=\"hidden md:inline\"/>This is a demo estimate — real returns vary.`;
-    }
-    function resetEstimator() {
-      document.getElementById('calcHash').value = 10;
-      document.getElementById('calcPrice').value = 60000;
-      document.getElementById('calcNetwork').value = 350;
-      document.getElementById('estResult').textContent = 'Enter values and click Estimate to see a demo result.';
-    }
-
-    // small helper to sync sim range with preview
-    document.getElementById('simHash')?.addEventListener('input', function(e) {
-      // optional: do something, currently purely illustrative
+    particles.forEach(p => {
+        p.update();
+        p.draw();
     });
 
-  </script>
+    requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ========= INTERACTIVE MINER ICON ========= */
+document.getElementById("miner").addEventListener("click", () => {
+    gsap.fromTo("#miner", { y: 0 }, {
+        y: -20,
+        repeat: 3,
+        yoyo: true,
+        duration: 0.15,
+        ease: "power1.inOut"
+    });
+
+    // Fake “hash” effect on background
+    for (let i = 0; i < 10; i++) {
+        particles.push(new Particle());
+    }
+});
+</script>
+
 </body>
 </html>
