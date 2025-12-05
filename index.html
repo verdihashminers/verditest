@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERDIHASH – Mining the Future</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Montserrat:wght@300;600&display=swap" rel="stylesheet">
+
+<style>
+/* ----------------------------------------------
+   GLOBAL
+------------------------------------------------*/
+body {
+    margin: 0;
+    background: #05060b;
+    font-family: 'Montserrat', sans-serif;
+    overflow: hidden;
+    color: #fff;
+}
+
+/* Video Background (Optional Toggle) */
+#bgVideo {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    object-fit: cover;
+    z-index: -3;
+    opacity: 0.15;
+    filter: blur(2px);
+}
+
+/* Particle Canvas */
+#particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -2;
+}
+
+/* Blockchain Lines Canvas */
+#chainCanvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw; height: 100vh;
+    z-index: -1;
+    opacity: 0.4;
+}
+
+.wrapper {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 95%;
+    max-width: 900px;
+    text-align: center;
+    z-index: 10;
+}
+
+/* ----------------------------------------------
+   TITLES
+------------------------------------------------*/
+h1 {
+    font-family: 'Orbitron';
+    font-size: 4rem;
+    margin: 0;
+    letter-spacing: 4px;
+    background: linear-gradient(90deg, #00f2ff, #00ff88, #00f2ff);
+    background-size: 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradientMove 6s infinite linear;
+    filter: drop-shadow(0 0 15px #0ff);
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0%; }
+    50% { background-position: 100%; }
+    100% { background-position: 0%; }
+}
+
+.subtitle {
+    margin-top: 10px;
+    opacity: 0.8;
+    font-size: 1.2rem;
+}
+
+/* ----------------------------------------------
+   COUNTDOWN TIMER
+------------------------------------------------*/
+#countdown {
+    margin-top: 20px;
+    font-family: 'Orbitron';
+    font-size: 1.3rem;
+    color: #00f2ff;
+    letter-spacing: 2px;
+    text-shadow: 0 0 10px #0ff;
+}
+
+/* ----------------------------------------------
+   3D ROTATING BITCOIN
+------------------------------------------------*/
+#bitcoinOrb {
+    margin: 25px auto 10px auto;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, #ffd700, #bb8b00);
+    border-radius: 50%;
+    animation: spin 6s infinite linear;
+    box-shadow: 0 0 25px #ffdf55;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    filter: drop-shadow(0 0 15px gold);
+}
+
+@keyframes spin {
+    from { transform: rotateY(0deg); }
+    to { transform: rotateY(360deg); }
+}
+
+/* ----------------------------------------------
+   MINING BAR
+------------------------------------------------*/
+.mine-bar {
+    margin: 30px auto;
+    width: 100%;
+    height: 15px;
+    background: #12121c;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 15px #0ff8;
+}
+
+.mine-progress {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #00eaff, #00ff88);
+    animation: mining 8s infinite linear;
+}
+
+@keyframes mining {
+    0% { width: 0%; }
+    50% { width: 100%; }
+    100% { width: 0%; }
+}
+
+/* ----------------------------------------------
+   ALGORITHM SELECTOR
+------------------------------------------------*/
+select {
+    margin-top: 15px;
+    padding: 10px 15px;
+    background: #081018;
+    border: 1px solid #00f2ff;
+    color: #00f2ff;
+    border-radius: 8px;
+    font-family: 'Orbitron';
+    cursor: pointer;
+    text-shadow: 0 0 5px #00f2ff;
+}
+
+/* ----------------------------------------------
+   HASH STREAM
+------------------------------------------------*/
+.hash-box {
+    margin-top: 25px;
+    height: 150px;
+    overflow-y: auto;
+    background: rgba(0,255,255,0.05);
+    border: 1px solid #00ffff55;
+    border-radius: 8px;
+    padding: 15px;
+    font-family: 'Orbitron';
+    text-align: left;
+    box-shadow: 0 0 10px #00ffff33;
+}
+
+.hash-line {
+    color: #00f2ff;
+    white-space: nowrap;
+}
+
+/* ----------------------------------------------
+   EMAIL FORM
+------------------------------------------------*/
+#emailForm {
+    margin-top: 25px;
+}
+
+input[type="email"] {
+    padding: 12px 15px;
+    width: 70%;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid #00ffff33;
+    color: #fff;
+    font-size: 1rem;
+}
+
+button {
+    padding: 12px 18px;
+    background: #00ffaa;
+    color: #000;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-left: 10px;
+    box-shadow: 0 0 15px #00ffaa;
+}
+
+/* ----------------------------------------------
+   MINER ICON
+------------------------------------------------*/
+#minerIcon {
+    margin-top: 20px;
+    font-size: 2.5rem;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: .2s;
+}
+
+#minerIcon:hover {
+    transform: scale(1.3);
+    opacity: 1;
+}
+
+/* ----------------------------------------------
+   FOOTER
+------------------------------------------------*/
+.footer {
+    margin-top: 25px;
+    opacity: 0.5;
+    font-size: 0.9rem;
+}
+</style>
+</head>
+
+<body>
+
+<!-- Optional video background -->
+<video id="bgVideo" autoplay muted loop>
+    <source src="https://cdn.jsdelivr.net/gh/danielcranney/assets/crypto.mp4" type="video/mp4">
+</video>
+
+<canvas id="particles"></canvas>
+<canvas id="chainCanvas"></canvas>
+
+<div class="wrapper">
+
+    <h1>VERDIHASH</h1>
+    <div class="subtitle">
+        Next-Gen Bitcoin & Crypto Mining • Cloud Mining Contracts
+    </div>
+
+    <div id="countdown"></div>
+
+    <div id="bitcoinOrb">₿</div>
+
+    <div class="mine-bar"><div class="mine-progress"></div></div>
+
+    <!-- ALGO Selector -->
+    <select id="algo">
+        <option value="sha256">SHA-256</option>
+        <option value="scrypt">Scrypt</option>
+        <option value="ethash">Ethash</option>
+    </select>
+
+    <!-- Hash Stream -->
+    <div class="hash-box" id="hashBox">Initializing hash engine...</div>
+
+    <!-- Email Signup -->
+    <form id="emailForm">
+        <input type="email" id="email" placeholder="Enter your email for early access">
+        <button type="submit">Notify Me</button>
+    </form>
+
+    <div id="minerIcon">⛏️</div>
+
+    <div class="footer">
+        © VERDIHASH — Mining the Future
+    </div>
+</div>
+
+<script>
+/* ================================================================
+   COUNTDOWN TIMER
+================================================================*/
+const launch = new Date(Date.now() + 1000*60*60*24*10);  
+function updateCountdown(){
+    let now = new Date();
+    let diff = launch - now;
+
+    let d = Math.floor(diff/86400000);
+    let h = Math.floor((diff%86400000)/3600000);
+    let m = Math.floor((diff%3600000)/60000);
+    let s = Math.floor((diff%60000)/1000);
+
+    document.getElementById("countdown").textContent =
+        `LAUNCH IN: ${d}D ${h}H ${m}M ${s}S`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+/* ================================================================
+   PARTICLES
+================================================================*/
+const pCanvas = document.getElementById("particles");
+const pCtx = pCanvas.getContext("2d");
+pCanvas.width = innerWidth; pCanvas.height = innerHeight;
+
+let particles = [];
+class Particle {
+    constructor(){
+        this.x = Math.random()*innerWidth;
+        this.y = Math.random()*innerHeight;
+        this.vx = (Math.random()-.5)*.5;
+        this.vy = (Math.random()-.5)*.5;
+        this.size = Math.random()*2 + 1;
+    }
+    update(){
+        this.x+=this.vx; this.y+=this.vy;
+        if(this.x<0||this.x>innerWidth) this.vx*=-1;
+        if(this.y<0||this.y>innerHeight) this.vy*=-1;
+    }
+    draw(){
+        pCtx.fillStyle="#00ffff";
+        pCtx.shadowBlur=10;
+        pCtx.shadowColor="#00ffff";
+        pCtx.beginPath();
+        pCtx.arc(this.x,this.y,this.size,0,Math.PI*2);
+        pCtx.fill();
+    }
+}
+for(let i=0;i<90;i++) particles.push(new Particle());
+
+function animateParticles(){
+    pCtx.clearRect(0,0,pCanvas.width,pCanvas.height);
+    particles.forEach(p=>{p.update(); p.draw();});
+    requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+/* ================================================================
+   BLOCKCHAIN VISUALIZER (LINES)
+================================================================*/
+const chainCanvas=document.getElementById("chainCanvas");
+const chainCtx=chainCanvas.getContext("2d");
+chainCanvas.width=innerWidth; chainCanvas.height=innerHeight;
+
+let links=[];
+for(let i=0;i<20;i++){
+    links.push({
+        x: Math.random()*innerWidth,
+        y: Math.random()*innerHeight,
+        speed: .4 +
